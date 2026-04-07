@@ -98,16 +98,8 @@
         }
         .input-area button:disabled { opacity: 0.6; cursor: not-allowed; }
         .typing { font-size: 12px; color: #999; padding: 8px 20px 12px 20px; display: none; }
-        .clear-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
+        .header-controls { display: flex; justify-content: flex-end; padding: 5px 20px; background: rgba(0,0,0,0.1); }
+        .clear-history { background: none; border: none; color: white; font-size: 12px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -115,6 +107,9 @@
         <div class="header">
             <h1>🍔 Lanchonete do Zé</h1>
             <p>Atendente Virtual 24h</p>
+        </div>
+        <div class="header-controls">
+            <button class="clear-history" onclick="clearHistory()">🗑️ Limpar histórico</button>
         </div>
         <div class="messages" id="messages"></div>
         <div class="typing" id="typing">🤖 Digitando...</div>
@@ -132,14 +127,39 @@
 
         let isLoading = false;
         
-        // Memória: manter o mesmo threadId durante toda a conversa
+        // Memória persistente
         let threadId = localStorage.getItem('threadId');
         if (!threadId) {
             threadId = "frontend-" + Date.now();
             localStorage.setItem('threadId', threadId);
         }
         
-        let runId = "run-" + Date.now();
+        // Carregar histórico de mensagens
+        let messageHistory = [];
+        const savedHistory = localStorage.getItem('messageHistory');
+        if (savedHistory) {
+            messageHistory = JSON.parse(savedHistory);
+        }
+
+        function saveMessageToHistory(role, content) {
+            messageHistory.push({ role, content, timestamp: Date.now() });
+            // Manter apenas últimas 100 mensagens
+            if (messageHistory.length > 100) {
+                messageHistory = messageHistory.slice(-100);
+            }
+            localStorage.setItem('messageHistory', JSON.stringify(messageHistory));
+        }
+
+        function clearHistory() {
+            messageHistory = [];
+            localStorage.removeItem('messageHistory');
+            localStorage.removeItem('threadId');
+            messagesDiv.innerHTML = '';
+            threadId = "frontend-" + Date.now();
+            localStorage.setItem('threadId', threadId);
+            addMessage('Olá! 👋 Seja bem-vindo à Lanchonete do Zé!\n\nO que você vai querer hoje?', false);
+            saveMessageToHistory('assistant', 'Olá! 👋 Seja bem-vindo à Lanchonete do Zé!\n\nO que você vai querer hoje?');
+        }
 
         function formatMessage(text) {
             return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
@@ -153,6 +173,17 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
+        // Carregar histórico ao iniciar
+        function loadHistory() {
+            for (const msg of messageHistory) {
+                const div = document.createElement('div');
+                div.className = `message ${msg.role === 'user' ? 'user' : 'bot'}`;
+                div.innerHTML = `<div class="bubble">${msg.role === 'user' ? msg.content : formatMessage(msg.content)}</div>`;
+                messagesDiv.appendChild(div);
+            }
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
         async function sendMessage() {
             const msg = input.value.trim();
             if (!msg || isLoading) return;
@@ -162,6 +193,7 @@
             input.disabled = true;
 
             addMessage(msg, true);
+            saveMessageToHistory('user', msg);
             input.value = '';
             typingDiv.style.display = 'block';
             
@@ -196,6 +228,8 @@
                 let fullReply = '';
                 const lines = responseText.split('\n');
                 
+                let botMessageAdded = false;
+                
                 for (const line of lines) {
                     if (line.startsWith('data: ')) {
                         try {
@@ -205,11 +239,14 @@
                             
                             if (event.type === 'TEXT_MESSAGE_CONTENT' && event.delta) {
                                 fullReply += event.delta;
-                                const lastMessage = messagesDiv.lastChild;
-                                if (lastMessage && lastMessage.classList && lastMessage.classList.contains('bot')) {
-                                    lastMessage.querySelector('.bubble').innerHTML = formatMessage(fullReply);
-                                } else if (fullReply) {
+                                if (!botMessageAdded) {
                                     addMessage(fullReply, false);
+                                    botMessageAdded = true;
+                                } else {
+                                    const lastMessage = messagesDiv.lastChild;
+                                    if (lastMessage && lastMessage.classList.contains('bot')) {
+                                        lastMessage.querySelector('.bubble').innerHTML = formatMessage(fullReply);
+                                    }
                                 }
                                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
                             }
@@ -217,13 +254,19 @@
                     }
                 }
                 
-                if (!fullReply) {
-                    addMessage('Desculpe, não entendi. Pode repetir?', false);
+                if (fullReply) {
+                    saveMessageToHistory('assistant', fullReply);
+                } else {
+                    const errorMsg = 'Desculpe, não entendi. Pode repetir?';
+                    addMessage(errorMsg, false);
+                    saveMessageToHistory('assistant', errorMsg);
                 }
                 
             } catch (error) {
                 console.error('Erro:', error);
-                addMessage('❌ Erro de conexão. Tente novamente.', false);
+                const errorMsg = '❌ Erro de conexão. Tente novamente.';
+                addMessage(errorMsg, false);
+                saveMessageToHistory('assistant', errorMsg);
             } finally {
                 isLoading = false;
                 sendBtn.disabled = false;
@@ -240,7 +283,13 @@
             }
         });
 
-        addMessage('Olá! 👋 Seja bem-vindo à Lanchonete do Zé!\n\nO que você vai querer hoje?', false);
+        // Inicializar
+        if (messageHistory.length === 0) {
+            addMessage('Olá! 👋 Seja bem-vindo à Lanchonete do Zé!\n\nO que você vai querer hoje?', false);
+            saveMessageToHistory('assistant', 'Olá! 👋 Seja bem-vindo à Lanchonete do Zé!\n\nO que você vai querer hoje?');
+        } else {
+            loadHistory();
+        }
     </script>
 </body>
 </html>
