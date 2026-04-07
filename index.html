@@ -163,7 +163,7 @@
             typingDiv.style.display = 'block';
 
             try {
-                const response = await fetch('https://atendente-lanchonete.onrender.com/', {
+                const response = await fetch('https://atendente-lanchonete.onrender.com/agui', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ messages: [{ role: 'user', content: msg }] })
