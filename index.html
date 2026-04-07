@@ -98,6 +98,16 @@
         }
         .input-area button:disabled { opacity: 0.6; cursor: not-allowed; }
         .typing { font-size: 12px; color: #999; padding: 8px 20px 12px 20px; display: none; }
+        .clear-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -121,7 +131,14 @@
         const sendBtn = document.getElementById('sendBtn');
 
         let isLoading = false;
-        let threadId = "frontend-" + Date.now();
+        
+        // Memória: manter o mesmo threadId durante toda a conversa
+        let threadId = localStorage.getItem('threadId');
+        if (!threadId) {
+            threadId = "frontend-" + Date.now();
+            localStorage.setItem('threadId', threadId);
+        }
+        
         let runId = "run-" + Date.now();
 
         function formatMessage(text) {
@@ -136,29 +153,6 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        function parseStreamingResponse(data, currentReply) {
-            // Processa cada linha do streaming
-            const lines = data.split('\n');
-            let fullReply = currentReply || '';
-            
-            for (const line of lines) {
-                if (line.startsWith('data: ')) {
-                    try {
-                        const jsonStr = line.substring(6);
-                        if (jsonStr.trim() === '') continue;
-                        const event = JSON.parse(jsonStr);
-                        
-                        if (event.type === 'TEXT_MESSAGE_CONTENT' && event.delta) {
-                            fullReply += event.delta;
-                        }
-                    } catch (e) {
-                        // Ignora erros de parsing
-                    }
-                }
-            }
-            return fullReply;
-        }
-
         async function sendMessage() {
             const msg = input.value.trim();
             if (!msg || isLoading) return;
@@ -171,7 +165,6 @@
             input.value = '';
             typingDiv.style.display = 'block';
             
-            // Criar nova runId para cada mensagem
             const currentRunId = "run-" + Date.now();
             const messageId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString();
 
@@ -200,7 +193,6 @@
 
                 const responseText = await response.text();
                 
-                // Processar o streaming
                 let fullReply = '';
                 const lines = responseText.split('\n');
                 
@@ -213,18 +205,15 @@
                             
                             if (event.type === 'TEXT_MESSAGE_CONTENT' && event.delta) {
                                 fullReply += event.delta;
-                                // Atualizar a mensagem em tempo real
                                 const lastMessage = messagesDiv.lastChild;
-                                if (lastMessage && lastMessage.classList.contains('bot')) {
+                                if (lastMessage && lastMessage.classList && lastMessage.classList.contains('bot')) {
                                     lastMessage.querySelector('.bubble').innerHTML = formatMessage(fullReply);
-                                } else {
+                                } else if (fullReply) {
                                     addMessage(fullReply, false);
                                 }
                                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
                             }
-                        } catch (e) {
-                            // Ignora erros de parsing
-                        }
+                        } catch (e) {}
                     }
                 }
                 
