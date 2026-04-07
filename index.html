@@ -151,15 +151,6 @@
             padding: 8px 20px 12px 20px;
             display: none;
         }
-
-        .typing span {
-            animation: blink 1.4s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
     </style>
 </head>
 <body>
@@ -170,7 +161,7 @@
         </div>
         <div class="messages" id="messages"></div>
         <div class="typing" id="typing">
-            🤖 <span>Digitando</span><span>.</span><span>.</span><span>.</span>
+            🤖 Digitando...
         </div>
         <div class="input-area">
             <input type="text" id="input" placeholder="Digite seu pedido..." autofocus>
@@ -185,6 +176,8 @@
         const sendBtn = document.getElementById('sendBtn');
 
         let isLoading = false;
+        let threadId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+        let runId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
 
         function formatMessage(text) {
             return text
@@ -213,37 +206,61 @@
             typingDiv.style.display = 'block';
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
+            // Gerar novos IDs para cada mensagem
+            const messageId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+            
+            const requestBody = {
+                threadId: threadId,
+                runId: runId,
+                state: {},
+                messages: [
+                    {
+                        id: messageId,
+                        role: "user",
+                        content: msg
+                    }
+                ],
+                tools: [],
+                context: [],
+                forwardedProps: {}
+            };
+
             try {
                 const response = await fetch('https://atendente-lanchonete.onrender.com/agui', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ 
-                        messages: [{ role: 'user', content: msg }]
-                    })
+                    body: JSON.stringify(requestBody)
                 });
 
                 const data = await response.json();
                 
-                // AG-UI retorna a resposta em data.messages[0].content
                 let reply = 'Desculpe, não entendi.';
                 
-                if (data.messages && data.messages.length > 0 && data.messages[0].content) {
-                    reply = data.messages[0].content;
+                if (data.messages && data.messages.length > 0) {
+                    const lastMessage = data.messages[data.messages.length - 1];
+                    if (lastMessage.content) {
+                        reply = lastMessage.content;
+                    }
                 } else if (data.content) {
                     reply = data.content;
                 } else if (data.response) {
                     reply = data.response;
                 } else if (data.message) {
                     reply = data.message;
-                } else if (typeof data === 'string') {
-                    reply = data;
                 } else {
                     reply = JSON.stringify(data);
                 }
                 
                 addMessage(reply, false);
+                
+                // Atualizar runId para a próxima interação
+                if (data.runId) {
+                    runId = data.runId;
+                } else {
+                    runId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+                }
                 
             } catch (error) {
                 console.error('Erro:', error);
@@ -264,7 +281,6 @@
             }
         });
 
-        // Mensagem de boas-vindas
         addMessage('Olá! 👋 Seja bem-vindo à Lanchonete do Zé!\n\nO que você vai querer hoje? Temos:\n🍟 Batata Frita - R$ 10,00\n🍔 X-Bacon - R$ 16,00\n🥤 Coca-Cola - R$ 6,00\n🥤 Suco Natural - R$ 8,00', false);
     </script>
 </body>
