@@ -293,6 +293,12 @@
         } else {
             loadHistory();
         }
+
+        // Keep-alive: ping a cada 1 minuto enquanto a página estiver aberta
+setInterval(() => {
+    fetch('https://atendente-lanchonete.onrender.com', { method: 'HEAD', cache: 'no-store' })
+        .catch(() => {});
+}, 60000);
     </script>
 </body>
     
