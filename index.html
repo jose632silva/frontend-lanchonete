@@ -732,7 +732,7 @@ setInterval(() => {
             align-items: center;
             padding: 12px;
         }
-        .chat-container {
+        .app-container {
             width: 100%;
             max-width: 520px;
             background: #ffffff;
@@ -746,112 +746,108 @@ setInterval(() => {
             border: 8px solid #ffffff;
         }
 
-        /* HEADER MAIOR E PROFISSIONAL (com espaço para logo grande + foto de comida) */
+        /* HEADER COM LOGO */
         .header {
-            height: 220px;
             background: linear-gradient(135deg, #e63939 0%, #f97316 100%);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 0 24px 20px;
-            color: white;
-        }
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://picsum.photos/id/1015/1200/800') center/cover no-repeat;
-            opacity: 0.22;
-            z-index: 1;
-        }
-        .header-content {
-            position: relative;
-            z-index: 2;
+            padding: 18px 24px;
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 16px;
+            color: white;
+            position: relative;
         }
-        .logo-container {
-            width: 110px;
-            height: 110px;
+        .logo {
+            width: 68px;
+            height: 68px;
             background: white;
-            border-radius: 24px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 52px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            flex-shrink: 0;
+            font-size: 42px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
         .header-info h1 {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             letter-spacing: -1px;
-            line-height: 1;
         }
         .header-info p {
-            font-size: 15px;
+            font-size: 14px;
             opacity: 0.95;
-            margin-top: 4px;
-        }
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            background: rgba(255,255,255,0.25);
-            padding: 4px 14px;
-            border-radius: 9999px;
-            backdrop-filter: blur(10px);
-            width: fit-content;
-            margin-top: 8px;
-        }
-        .status-dot {
-            width: 9px;
-            height: 9px;
-            background: #22c55e;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
         }
 
-        .header-banner {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.9);
-            color: #1f2937;
-            padding: 6px 16px;
-            border-radius: 9999px;
-            font-size: 13px;
+        /* CARROSSEL DE CARDÁPIO - EXATAMENTE COMO VOCÊ PEDIU */
+        .carousel-section {
+            background: #f8f4f0;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0e8e0;
+        }
+        .carousel-title {
+            padding: 0 24px 12px;
+            font-size: 17px;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            color: #3a1f0f;
             display: flex;
             align-items: center;
-            gap: 6px;
-            z-index: 3;
+            gap: 8px;
+        }
+        .carousel-container {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 0 24px 8px;
+            display: flex;
+            gap: 16px;
+            scrollbar-width: none;
+        }
+        .carousel-container::-webkit-scrollbar { display: none; }
+        .carousel-card {
+            flex: 0 0 220px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .carousel-card:hover {
+            transform: scale(1.04);
+            box-shadow: 0 15px 30px rgba(230, 57, 57, 0.2);
+        }
+        .carousel-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+        .carousel-info {
+            padding: 12px 14px;
+        }
+        .carousel-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .carousel-info p {
+            font-size: 15px;
+            color: #e63939;
+            font-weight: 700;
         }
 
+        /* ÁREA DE MENSAGENS */
         .messages {
             flex: 1;
             overflow-y: auto;
-            padding: 28px 24px;
+            padding: 24px;
             background: #f8f4f0;
             display: flex;
             flex-direction: column;
             gap: 18px;
-            scrollbar-width: thin;
         }
-
         .message {
             display: flex;
             gap: 12px;
-            animation: fadeIn 0.4s ease forwards;
             max-width: 85%;
+            animation: fadeIn 0.4s ease;
         }
         .bot { align-self: flex-start; }
         .user { align-self: flex-end; flex-direction: row-reverse; }
@@ -859,14 +855,13 @@ setInterval(() => {
         .avatar {
             width: 38px;
             height: 38px;
-            flex-shrink: 0;
             background: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 22px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .bubble {
@@ -874,7 +869,6 @@ setInterval(() => {
             border-radius: 26px;
             font-size: 16px;
             line-height: 1.45;
-            word-wrap: break-word;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .user .bubble {
@@ -889,36 +883,14 @@ setInterval(() => {
             border: 1px solid #f0e8e0;
         }
 
-        .message-actions {
-            margin-top: 8px;
-            margin-left: 50px;
-        }
-        .print-btn {
-            background: #fef2e8;
-            color: #e63939;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 9999px;
-            font-size: 13.5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 8px rgba(230, 57, 57, 0.15);
-        }
-        .print-btn:hover {
-            background: #ffe6d0;
-            transform: translateY(-2px);
-        }
-
+        /* INPUT PROFISSIONAL COM MICROFONE */
         .input-area {
             padding: 18px 24px;
             background: white;
             border-top: 1px solid #f0e8e0;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
         .input-area input {
             flex: 1;
@@ -927,15 +899,14 @@ setInterval(() => {
             border-radius: 9999px;
             outline: none;
             font-size: 17px;
-            transition: all 0.3s;
         }
         .input-area input:focus {
             border-color: #e63939;
             box-shadow: 0 0 0 5px rgba(230, 57, 57, 0.15);
         }
-        .input-area button {
-            width: 58px;
-            height: 58px;
+        .input-btn {
+            width: 54px;
+            height: 54px;
             background: linear-gradient(135deg, #e63939, #f97316);
             color: white;
             border: none;
@@ -945,15 +916,21 @@ setInterval(() => {
             justify-content: center;
             font-size: 24px;
             cursor: pointer;
-            transition: all 0.25s;
             box-shadow: 0 6px 20px rgba(230, 57, 57, 0.3);
         }
-        .input-area button:hover {
-            transform: scale(1.08);
-        }
-        .input-area button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .input-btn:hover { transform: scale(1.1); }
+        .mic-btn {
+            width: 54px;
+            height: 54px;
+            background: #f8f4f0;
+            color: #e63939;
+            border: 2px solid #f0e8e0;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
         }
 
         .typing {
@@ -964,209 +941,106 @@ setInterval(() => {
             align-items: center;
             gap: 8px;
         }
-        .typing span {
-            animation: typingBounce 1.4s infinite;
-        }
-
-        .header-controls {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            z-index: 10;
-        }
-        .clear-history {
-            background: rgba(255,255,255,0.25);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 9999px;
-            font-size: 14px;
-            cursor: pointer;
-            backdrop-filter: blur(12px);
-        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        @keyframes typingBounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-6px); }
-        }
 
         @media (max-width: 520px) {
-            .chat-container { border-radius: 0; height: 100vh; max-height: none; border: none; }
-            .header { height: 200px; }
+            .app-container { border-radius: 0; height: 100vh; max-height: none; border: none; }
         }
     </style>
 </head>
 <body>
-    <div class="chat-container">
+    <div class="app-container">
         
-        <!-- HEADER GRANDE E BONITO -->
+        <!-- HEADER -->
         <div class="header">
-            <div class="header-banner">
-                <i class="fa-solid fa-motorcycle"></i>
-                Delivery em 25-35 min • Aberto 24h
-            </div>
-
-            <div class="header-controls">
-                <button onclick="clearHistory()" class="clear-history flex items-center gap-2">
-                    <i class="fa-solid fa-trash-can"></i>
-                    Limpar
-                </button>
-            </div>
-
-            <div class="header-content">
-                <!-- Logo grande e profissional -->
-                <div class="logo-container">
-                    🍔
-                </div>
-                
-                <div class="header-info">
-                    <h1>Lanchonete da Lú</h1>
-                    <p>Seu atendente virtual com IA</p>
-                    
-                    <div class="status">
-                        <span class="status-dot"></span>
-                        Online agora • Atendendo instantaneamente
-                    </div>
-                </div>
+            <div class="logo">🍔</div>
+            <div>
+                <h1>Lanchonete da Lú</h1>
+                <p class="flex items-center gap-2">
+                    <span class="inline-block w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
+                    Atendente IA • 24h
+                </p>
             </div>
         </div>
 
+        <!-- CARROSSEL DE FOTOS DO CARDÁPIO -->
+        <div class="carousel-section">
+            <div class="carousel-title">
+                <i class="fa-solid fa-fire"></i>
+                Mais pedidos hoje
+            </div>
+            <div class="carousel-container" id="carousel">
+                <!-- Cards serão inseridos via JS -->
+            </div>
+        </div>
+
+        <!-- CHAT -->
         <div class="messages" id="messages"></div>
-        
+
         <div class="typing" id="typing">
             <div class="avatar">🍔</div>
-            <span>Digitando</span>
-            <span>.</span><span>.</span><span>.</span>
+            <span>Digitando</span><span>.</span><span>.</span><span>.</span>
         </div>
 
+        <!-- INPUT COM MICROFONE -->
         <div class="input-area">
-            <input type="text" id="input" placeholder="Digite seu pedido ou dúvida..." autofocus>
-            <button id="sendBtn" onclick="sendMessage()">
+            <button onclick="startVoiceInput()" class="mic-btn">
+                <i class="fa-solid fa-microphone"></i>
+            </button>
+            <input type="text" id="input" placeholder="Digite seu pedido..." autofocus>
+            <button onclick="sendMessage()" class="input-btn">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
         </div>
     </div>
 
     <script>
-        // === Script mantido e otimizado (mesma lógica do anterior) ===
-        const messagesDiv = document.getElementById('messages');
-        const typingDiv = document.getElementById('typing');
-        const input = document.getElementById('input');
-        const sendBtn = document.getElementById('sendBtn');
-        let isLoading = false;
-        
-        let threadId = localStorage.getItem('threadId') || "frontend-" + Date.now();
-        localStorage.setItem('threadId', threadId);
-        
-        let messageHistory = JSON.parse(localStorage.getItem('messageHistory')) || [];
-        
-        function saveMessageToHistory(role, content) {
-            messageHistory.push({ role, content, timestamp: Date.now() });
-            if (messageHistory.length > 120) messageHistory = messageHistory.slice(-120);
-            localStorage.setItem('messageHistory', JSON.stringify(messageHistory));
-        }
-        
-        function clearHistory() {
-            if (!confirm('Limpar todo o histórico de conversa?')) return;
-            messageHistory = [];
-            localStorage.clear();
-            threadId = "frontend-" + Date.now();
-            localStorage.setItem('threadId', threadId);
-            messagesDiv.innerHTML = '';
-            addWelcomeMessage();
-        }
-        
-        function formatMessage(text) {
-            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                       .replace(/\n/g, '<br>');
-        }
-        
-        function addMessage(text, isUser) {
-            const div = document.createElement('div');
-            div.className = `message ${isUser ? 'user' : 'bot'}`;
+        // ==================== MENU DO CARROSSEL ====================
+        const menuItems = [
+            { id: 1, name: "Classic Burger", price: "R$ 22,90", img: "https://picsum.photos/id/1015/800/600" },
+            { id: 2, name: "Cheese Bacon", price: "R$ 27,90", img: "https://picsum.photos/id/292/800/600" },
+            { id: 3, name: "Batata Frita", price: "R$ 14,90", img: "https://picsum.photos/id/201/800/600" },
+            { id: 4, name: "Milkshake Oreo", price: "R$ 16,90", img: "https://picsum.photos/id/312/800/600" },
+            { id: 5, name: "Combo Lú Especial", price: "R$ 39,90", img: "https://picsum.photos/id/870/800/600" },
+            { id: 6, name: "Frango Empanado", price: "R$ 24,90", img: "https://picsum.photos/id/431/800/600" }
+        ];
+
+        function createCarousel() {
+            const container = document.getElementById('carousel');
+            container.innerHTML = '';
             
-            if (!isUser) {
-                // Avatar do bot (🍔)
-                const avatar = document.createElement('div');
-                avatar.className = 'avatar';
-                avatar.innerHTML = '🍔';
-                div.appendChild(avatar);
-            }
-            
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.innerHTML = isUser ? text : formatMessage(text);
-            div.appendChild(bubble);
-            
-            if (!isUser) {
-                const actions = document.createElement('div');
-                actions.className = 'message-actions';
-                actions.innerHTML = `
-                    <button class="print-btn" onclick="printOrder('${text.replace(/'/g, "\\'")}')">
-                        <i class="fa-solid fa-print"></i> Imprimir pedido
-                    </button>
+            menuItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'carousel-card';
+                card.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="carousel-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.price}</p>
+                    </div>
                 `;
-                div.appendChild(actions);
-            }
-            
-            messagesDiv.appendChild(div);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-        
-        function printOrder(content) {
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html><head><title>Pedido - Lanchonete da Lú</title>
-                <style>
-                    body { font-family: 'Courier New', monospace; padding: 40px; line-height: 1.6; background:#fff; }
-                    h1 { text-align:center; color:#e63939; margin-bottom:20px; }
-                    hr { border:2px dashed #f97316; margin:30px 0; }
-                </style>
-                </head><body>
-                    <h1>🍔 Lanchonete da Lú</h1>
-                    <hr>
-                    ${content.replace(/\n/g, '<br>')}
-                    <script>window.onload = () => { window.print(); setTimeout(() => window.close(), 800); }<\/script>
-                </body></html>
-            `);
-            printWindow.document.close();
-        }
-        
-        function loadHistory() {
-            messagesDiv.innerHTML = '';
-            messageHistory.forEach(msg => {
-                addMessage(msg.content, msg.role === 'user');
+                // Ao clicar na foto → envia direto pro agente
+                card.addEventListener('click', () => {
+                    const message = `Quero o ${item.name} (${item.price})`;
+                    addMessage(message, true);
+                    saveMessageToHistory('user', message);
+                    // Simula envio automático pro backend
+                    setTimeout(() => autoSendToAgent(message), 600);
+                });
+                container.appendChild(card);
             });
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
-        
-        function addWelcomeMessage() {
-            const welcome = `👋 Olá! Bem-vindo à <strong>Lanchonete da Lú</strong>!\n\nSou seu atendente virtual com IA. Já estou pronto para anotar seu pedido! O que você vai querer hoje?`;
-            addMessage(welcome, false);
-            saveMessageToHistory('assistant', welcome);
-        }
-        
-        async function sendMessage() {
-            const msg = input.value.trim();
-            if (!msg || isLoading) return;
-            
-            isLoading = true;
-            sendBtn.disabled = true;
-            input.disabled = true;
-            
-            addMessage(msg, true);
-            saveMessageToHistory('user', msg);
-            input.value = '';
+
+        // Envia automaticamente pro agente quando clica na foto
+        async function autoSendToAgent(text) {
+            const typingDiv = document.getElementById('typing');
             typingDiv.style.display = 'flex';
             
+            // Mesmo endpoint do seu backend
             try {
                 const response = await fetch('https://atendente-lanchonete.onrender.com/agui', {
                     method: 'POST',
@@ -1174,7 +1048,7 @@ setInterval(() => {
                     body: JSON.stringify({
                         threadId: threadId,
                         runId: "run-" + Date.now(),
-                        messages: [{ role: "user", content: msg }],
+                        messages: [{ role: "user", content: text }],
                         state: {}, tools: [], context: [], forwardedProps: {}
                     })
                 });
@@ -1186,60 +1060,196 @@ setInterval(() => {
                 const lines = responseText.split('\n');
                 for (const line of lines) {
                     if (line.startsWith('data: ')) {
+                        const jsonStr = line.substring(6).trim();
+                        if (!jsonStr) continue;
                         try {
-                            const jsonStr = line.substring(6).trim();
-                            if (!jsonStr) continue;
                             const event = JSON.parse(jsonStr);
-                            
                             if (event.type === 'TEXT_MESSAGE_CONTENT' && event.delta) {
                                 fullReply += event.delta;
-                                
                                 if (!botMessageAdded) {
                                     addMessage(fullReply, false);
                                     botMessageAdded = true;
                                 } else {
-                                    const lastBubble = messagesDiv.lastElementChild?.querySelector('.bubble');
+                                    const lastBubble = document.getElementById('messages').lastElementChild?.querySelector('.bubble');
                                     if (lastBubble) lastBubble.innerHTML = formatMessage(fullReply);
                                 }
-                                messagesDiv.scrollTop = messagesDiv.scrollHeight;
                             }
-                        } catch (e) {}
+                        } catch(e) {}
                     }
                 }
+                if (fullReply) saveMessageToHistory('assistant', fullReply);
+            } catch(e) {
+                console.error(e);
+            } finally {
+                typingDiv.style.display = 'none';
+            }
+        }
+
+        // ==================== CHAT (mesma lógica anterior, só mais limpa) ====================
+        const messagesDiv = document.getElementById('messages');
+        const typingDiv = document.getElementById('typing');
+        const input = document.getElementById('input');
+        let isLoading = false;
+        let threadId = localStorage.getItem('threadId') || "frontend-" + Date.now();
+        localStorage.setItem('threadId', threadId);
+        let messageHistory = JSON.parse(localStorage.getItem('messageHistory')) || [];
+
+        function saveMessageToHistory(role, content) {
+            messageHistory.push({ role, content, timestamp: Date.now() });
+            if (messageHistory.length > 120) messageHistory = messageHistory.slice(-120);
+            localStorage.setItem('messageHistory', JSON.stringify(messageHistory));
+        }
+
+        function clearHistory() {
+            if (!confirm('Limpar todo o histórico?')) return;
+            messageHistory = [];
+            localStorage.clear();
+            threadId = "frontend-" + Date.now();
+            localStorage.setItem('threadId', threadId);
+            messagesDiv.innerHTML = '';
+            addWelcomeMessage();
+        }
+
+        function formatMessage(text) {
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+        }
+
+        function addMessage(text, isUser) {
+            const div = document.createElement('div');
+            div.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            if (!isUser) {
+                const avatar = document.createElement('div');
+                avatar.className = 'avatar';
+                avatar.textContent = '🍔';
+                div.appendChild(avatar);
+            }
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.innerHTML = isUser ? text : formatMessage(text);
+            div.appendChild(bubble);
+            
+            if (!isUser) {
+                const actions = document.createElement('div');
+                actions.className = 'mt-2';
+                actions.innerHTML = `<button onclick="printOrder('${text.replace(/'/g, "\\'")}')" class="bg-[#fef2e8] text-[#e63939] px-5 py-2 rounded-3xl text-sm flex items-center gap-2 hover:bg-[#ffe6d0]">🖨️ Imprimir pedido</button>`;
+                div.appendChild(actions);
+            }
+            
+            messagesDiv.appendChild(div);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function printOrder(content) {
+            const win = window.open('', '_blank');
+            win.document.write(`
+                <html><head><title>Pedido Lanchonete da Lú</title>
+                <style>body{font-family:Courier New;padding:40px;line-height:1.6;}h1{text-align:center;color:#e63939;}</style></head>
+                <body><h1>🍔 Lanchonete da Lú</h1><hr>${content.replace(/\n/g, '<br>')}<script>window.print();setTimeout(()=>window.close(),800);<\/script></body></html>
+            `);
+            win.document.close();
+        }
+
+        function addWelcomeMessage() {
+            const welcome = `👋 Olá! Bem-vindo(a) à <strong>Lanchonete da Lú</strong>!\n\nToque em qualquer foto acima para pedir direto ou digite sua mensagem abaixo. O que vai ser hoje?`;
+            addMessage(welcome, false);
+            saveMessageToHistory('assistant', welcome);
+        }
+
+        async function sendMessage() {
+            const msg = input.value.trim();
+            if (!msg || isLoading) return;
+            isLoading = true;
+            input.disabled = true;
+            
+            addMessage(msg, true);
+            saveMessageToHistory('user', msg);
+            input.value = '';
+            typingDiv.style.display = 'flex';
+            
+            try {
+                const res = await fetch('https://atendente-lanchonete.onrender.com/agui', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        threadId: threadId,
+                        runId: "run-" + Date.now(),
+                        messages: [{ role: "user", content: msg }],
+                        state: {}, tools: [], context: [], forwardedProps: {}
+                    })
+                });
                 
-                if (fullReply) {
-                    saveMessageToHistory('assistant', fullReply);
-                } else {
-                    const errorMsg = 'Desculpe, não consegui entender. Pode repetir?';
-                    addMessage(errorMsg, false);
-                    saveMessageToHistory('assistant', errorMsg);
+                const text = await res.text();
+                let reply = '';
+                let added = false;
+                const lines = text.split('\n');
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const json = line.substring(6).trim();
+                        if (!json) continue;
+                        try {
+                            const event = JSON.parse(json);
+                            if (event.type === 'TEXT_MESSAGE_CONTENT' && event.delta) {
+                                reply += event.delta;
+                                if (!added) {
+                                    addMessage(reply, false);
+                                    added = true;
+                                } else {
+                                    const last = messagesDiv.lastElementChild?.querySelector('.bubble');
+                                    if (last) last.innerHTML = formatMessage(reply);
+                                }
+                            }
+                        } catch(e){}
+                    }
                 }
-            } catch (error) {
-                console.error(error);
-                const errorMsg = '❌ Erro de conexão. Tente novamente.';
-                addMessage(errorMsg, false);
-                saveMessageToHistory('assistant', errorMsg);
+                if (reply) saveMessageToHistory('assistant', reply);
+            } catch(e) {
+                addMessage('❌ Erro de conexão. Tente novamente.', false);
             } finally {
                 isLoading = false;
-                sendBtn.disabled = false;
                 input.disabled = false;
                 typingDiv.style.display = 'none';
                 input.focus();
             }
         }
-        
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-        
-        // Inicialização
+
+        // ==================== MICROFONE (Voz) ====================
+        function startVoiceInput() {
+            if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
+                alert('Seu navegador não suporta reconhecimento de voz.');
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'pt-BR';
+            recognition.interimResults = false;
+            
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                input.value = transcript;
+                sendMessage();
+            };
+            
+            recognition.onerror = () => alert('Não foi possível captar sua voz. Tente novamente.');
+            recognition.start();
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
         if (messageHistory.length === 0) {
+            createCarousel();
             addWelcomeMessage();
         } else {
-            loadHistory();
+            createCarousel();
+            messageHistory.forEach(msg => addMessage(msg.content, msg.role === 'user'));
         }
-        
-        // Ping no backend
+
+        // Enter no input
+        document.getElementById('input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Ping backend
         setInterval(() => {
             fetch('https://atendente-lanchonete.onrender.com', { method: 'HEAD' }).catch(() => {});
         }, 60000);
