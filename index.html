@@ -730,23 +730,22 @@ setInterval(() => {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 12px;
+            padding: 0;
+            overflow: hidden;
         }
         .app-container {
             width: 100%;
             max-width: 520px;
             background: #ffffff;
-            border-radius: 32px;
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+            border-radius: 0;
+            box-shadow: 0 0 0 8px #ffffff;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 94vh;
-            max-height: 820px;
-            border: 8px solid #ffffff;
+            height: 100vh;
         }
 
-        /* HEADER - Logo limpo e profissional (sem emoji) */
+        /* HEADER */
         .header {
             background: linear-gradient(135deg, #e63939 0%, #f97316 100%);
             padding: 20px 24px;
@@ -754,149 +753,152 @@ setInterval(() => {
             align-items: center;
             gap: 16px;
             color: white;
+            flex-shrink: 0;
         }
         .logo {
-            width: 72px;
-            height: 72px;
+            width: 68px;
+            height: 68px;
             background: white;
-            border-radius: 20px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #e63939;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            letter-spacing: -2px;
-        }
-        .header-info h1 {
             font-size: 26px;
             font-weight: 700;
+            color: #e63939;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+        .header-info h1 {
+            font-size: 25px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
         .header-info p {
-            font-size: 14.5px;
+            font-size: 14px;
             opacity: 0.95;
         }
 
-        /* CARROSSEL - Agora com scroll horizontal visível e fluido */
+        /* CARROSSEL - Scroll suave e visível */
         .carousel-section {
             background: #f8f4f0;
-            padding: 18px 0 14px;
+            padding: 16px 0 12px;
             border-bottom: 1px solid #f0e8e0;
+            flex-shrink: 0;
         }
         .carousel-title {
-            padding: 0 24px 10px;
-            font-size: 16.5px;
+            padding: 0 24px 8px;
+            font-size: 16px;
             font-weight: 600;
             color: #3a1f0f;
         }
         .carousel-container {
             overflow-x: auto;
             scroll-behavior: smooth;
-            padding: 0 24px 10px;
+            padding: 0 24px 8px;
             display: flex;
             gap: 14px;
-            scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
         }
         .carousel-container::-webkit-scrollbar { display: none; }
         .carousel-card {
-            flex: 0 0 190px;
+            flex: 0 0 185px;
             background: white;
-            border-radius: 20px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: transform 0.25s ease;
+            transition: transform 0.2s;
         }
-        .carousel-card:active { transform: scale(0.96); }
+        .carousel-card:active { transform: scale(0.97); }
         .carousel-card img {
             width: 100%;
-            height: 145px;
+            height: 138px;
             object-fit: cover;
         }
         .carousel-info {
-            padding: 12px 14px;
+            padding: 10px 12px;
         }
-        .carousel-info h3 { font-size: 15.5px; font-weight: 600; }
-        .carousel-info p { font-size: 15px; color: #e63939; font-weight: 700; }
+        .carousel-info h3 { font-size: 15px; font-weight: 600; }
+        .carousel-info p { font-size: 14.5px; color: #e63939; font-weight: 700; }
 
-        /* CHAT - Área maior e limpa */
+        /* MENSAGENS - Área grande */
         .messages {
             flex: 1;
             overflow-y: auto;
-            padding: 24px 20px;
+            padding: 20px 20px 12px;
             background: #f8f4f0;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
         }
         .message {
             display: flex;
-            gap: 12px;
-            max-width: 88%;
-            animation: fadeIn 0.35s ease;
+            gap: 10px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
         }
         .bot { align-self: flex-start; }
         .user { align-self: flex-end; flex-direction: row-reverse; }
 
         .avatar {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             background: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            flex-shrink: 0;
         }
 
         .bubble {
-            padding: 15px 20px;
-            border-radius: 26px;
-            font-size: 16.2px;
-            line-height: 1.45;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 14px 18px;
+            border-radius: 24px;
+            font-size: 15.8px;
+            line-height: 1.4;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
         }
         .user .bubble {
             background: linear-gradient(135deg, #e63939, #f97316);
             color: white;
-            border-bottom-right-radius: 8px;
+            border-bottom-right-radius: 6px;
         }
         .bot .bubble {
             background: white;
             color: #1f2937;
-            border-bottom-left-radius: 8px;
+            border-bottom-left-radius: 6px;
             border: 1px solid #f0e8e0;
         }
 
-        /* INPUT - Totalmente corrigido (nada cortado, botões grandes e visíveis) */
+        /* INPUT - Corrigido (nada cortado, botões grandes) */
         .input-area {
-            padding: 18px 24px 24px;
+            padding: 16px 24px 24px;
             background: white;
             border-top: 1px solid #f0e8e0;
             display: flex;
             align-items: center;
-            gap: 12px;
-            min-height: 82px;
+            gap: 10px;
+            flex-shrink: 0;
         }
         .input-area input {
             flex: 1;
-            padding: 18px 24px;
-            border: 2px solid #f0e8e0;
+            padding: 16px 20px;
+            border: 2px solid #e5d9cc;
             border-radius: 9999px;
             outline: none;
-            font-size: 17px;
-            height: 58px;
+            font-size: 16.5px;
+            height: 56px;
         }
         .input-area input:focus {
             border-color: #e63939;
-            box-shadow: 0 0 0 5px rgba(230, 57, 57, 0.15);
+            box-shadow: 0 0 0 4px rgba(230, 57, 57, 0.12);
         }
         .send-btn {
-            width: 62px;
-            height: 62px;
+            width: 58px;
+            height: 58px;
             background: linear-gradient(135deg, #e63939, #f97316);
             color: white;
             border: none;
@@ -904,42 +906,38 @@ setInterval(() => {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 26px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(230, 57, 57, 0.35);
+            box-shadow: 0 6px 18px rgba(230, 57, 57, 0.3);
             flex-shrink: 0;
         }
         .mic-btn {
-            width: 58px;
-            height: 58px;
+            width: 54px;
+            height: 54px;
             background: #f8f4f0;
             color: #e63939;
-            border: 2px solid #f0e8e0;
+            border: 2px solid #e5d9cc;
             border-radius: 9999px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 24px;
             cursor: pointer;
             flex-shrink: 0;
         }
 
         .typing {
-            padding: 12px 24px;
+            padding: 10px 24px;
             color: #9f6b4f;
-            font-size: 15px;
+            font-size: 14.5px;
             display: none;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 520px) {
-            .app-container { border-radius: 0; height: 100vh; max-height: none; border: none; }
         }
     </style>
 </head>
@@ -951,13 +949,13 @@ setInterval(() => {
             <div class="logo">LÚ</div>
             <div class="header-info">
                 <h1>Lanchonete da Lú</h1>
-                <p>Atendente Virtual com IA • 24h</p>
+                <p>Atendente Virtual com IA • 24 horas</p>
             </div>
         </div>
 
-        <!-- CARROSSEL (agora com scroll garantido) -->
+        <!-- CARROSSEL -->
         <div class="carousel-section">
-            <div class="carousel-title">Mais vendidos hoje</div>
+            <div class="carousel-title">Mais pedidos hoje</div>
             <div class="carousel-container" id="carousel"></div>
         </div>
 
@@ -969,12 +967,12 @@ setInterval(() => {
             <span>Digitando</span><span>.</span><span>.</span><span>.</span>
         </div>
 
-        <!-- INPUT - Totalmente corrigido (botão de envio grande e visível) -->
+        <!-- INPUT -->
         <div class="input-area">
             <button onclick="startVoiceInput()" class="mic-btn">
                 <i class="fa-solid fa-microphone"></i>
             </button>
-            <input type="text" id="input" placeholder="Digite seu pedido ou dúvida..." autofocus>
+            <input type="text" id="input" placeholder="Digite seu pedido..." autofocus>
             <button onclick="sendMessage()" class="send-btn">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
@@ -982,15 +980,14 @@ setInterval(() => {
     </div>
 
     <script>
-        // === MENU CARROSSEL (mais itens para forçar scroll visível) ===
+        // Carrossel
         const menuItems = [
             { name: "Classic Burger", price: "R$ 22,90", img: "https://picsum.photos/id/1015/800/600" },
             { name: "Cheese Bacon", price: "R$ 27,90", img: "https://picsum.photos/id/292/800/600" },
             { name: "Batata Frita", price: "R$ 14,90", img: "https://picsum.photos/id/201/800/600" },
             { name: "Milkshake Oreo", price: "R$ 16,90", img: "https://picsum.photos/id/312/800/600" },
             { name: "Combo Especial", price: "R$ 39,90", img: "https://picsum.photos/id/870/800/600" },
-            { name: "Frango Empanado", price: "R$ 24,90", img: "https://picsum.photos/id/431/800/600" },
-            { name: "Cheddar Supreme", price: "R$ 29,90", img: "https://picsum.photos/id/1005/800/600" }
+            { name: "Frango Empanado", price: "R$ 24,90", img: "https://picsum.photos/id/431/800/600" }
         ];
 
         function createCarousel() {
@@ -1010,13 +1007,13 @@ setInterval(() => {
                     const msg = `Quero o ${item.name} (${item.price})`;
                     addMessage(msg, true);
                     saveMessageToHistory('user', msg);
-                    setTimeout(() => autoSendToAgent(msg), 500);
+                    setTimeout(() => sendAutoMessage(msg), 400);
                 });
                 container.appendChild(card);
             });
         }
 
-        // === CHAT (sem botão de imprimir) ===
+        // Chat
         const messagesDiv = document.getElementById('messages');
         const typingDiv = document.getElementById('typing');
         const input = document.getElementById('input');
@@ -1027,7 +1024,7 @@ setInterval(() => {
 
         function saveMessageToHistory(role, content) {
             messageHistory.push({ role, content, timestamp: Date.now() });
-            if (messageHistory.length > 120) messageHistory = messageHistory.slice(-120);
+            if (messageHistory.length > 100) messageHistory = messageHistory.slice(-100);
             localStorage.setItem('messageHistory', JSON.stringify(messageHistory));
         }
 
@@ -1056,7 +1053,7 @@ setInterval(() => {
         }
 
         function addWelcomeMessage() {
-            const welcome = `Olá! Bem-vindo à Lanchonete da Lú.\n\nToque em qualquer foto acima ou digite abaixo. O que você vai pedir hoje?`;
+            const welcome = `Olá! Bem-vindo à Lanchonete da Lú.\n\nToque em qualquer foto acima ou digite seu pedido. Como posso ajudar?`;
             addMessage(welcome, false);
             saveMessageToHistory('assistant', welcome);
         }
@@ -1119,17 +1116,18 @@ setInterval(() => {
             }
         }
 
-        function autoSendToAgent(text) {
+        function sendAutoMessage(text) {
             typingDiv.style.display = 'flex';
-            // Reusa a mesma função de envio
-            const tempInput = input.value;
-            input.value = text;
-            sendMessage();
+            setTimeout(() => {
+                addMessage(text, true);
+                saveMessageToHistory('user', text);
+                sendMessage(); // reusa a função real
+            }, 300);
         }
 
         function startVoiceInput() {
             const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!Speech) return alert('Reconhecimento de voz não suportado.');
+            if (!Speech) return alert('Seu navegador não suporta voz.');
             const rec = new Speech();
             rec.lang = 'pt-BR';
             rec.onresult = e => {
@@ -1148,11 +1146,13 @@ setInterval(() => {
             messageHistory.forEach(m => addMessage(m.content, m.role === 'user'));
         }
 
-        input.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+        input.addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendMessage();
+        });
 
-        // Ping backend
-        setInterval(() => fetch('https://atendente-lanchonete.onrender.com', { method: 'HEAD' }).catch(() => {}), 60000);
+        setInterval(() => {
+            fetch('https://atendente-lanchonete.onrender.com', { method: 'HEAD' }).catch(() => {});
+        }, 60000);
     </script>
 </body>
 </html>
-
