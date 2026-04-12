@@ -804,13 +804,18 @@ setInterval(() => {
       padding:0 20px 12px;
     }
 
-    .scroll-outer{overflow:hidden;padding:2px 0 6px;}
+    .scroll-outer{
+      overflow-x:auto;overflow-y:hidden;
+      padding:2px 0 6px;
+      scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+      cursor:grab;
+    }
+    .scroll-outer::-webkit-scrollbar{display:none;}
+    .scroll-outer.dragging{cursor:grabbing;}
     .scroll-track{
       display:flex;gap:12px;width:max-content;
-      animation:rtl 30s linear infinite;
     }
-    .scroll-track:hover{animation-play-state:paused;}
-    @keyframes rtl{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
     .pcard{
       width:138px;flex-shrink:0;
@@ -1098,9 +1103,15 @@ function init(){
   ping();
 }
 
-/* ─ CAROUSEL (infinite RTL) ─ */
+/* ─ CAROUSEL — infinite RTL auto-scroll + touch/mouse drag ─ */
+let scrollOuter, scrollPaused=false, rafId=null;
+const SCROLL_SPEED = 0.5; // px per frame
+
 function buildCarousel(){
   const track=document.getElementById('scrollTrack');
+  scrollOuter=track.parentElement;
+
+  // Build items x2 for seamless infinite loop
   [MENU,MENU].forEach(set=>set.forEach(p=>{
     const c=document.createElement('div');
     c.className='pcard';
@@ -1108,6 +1119,66 @@ function buildCarousel(){
     c.addEventListener('click',()=>{ if(busy)return; c.classList.add('flash'); setTimeout(()=>c.classList.remove('flash'),600); sendText(p.o); });
     track.appendChild(c);
   }));
+
+  // Start auto-scroll after layout
+  requestAnimationFrame(()=>{
+    startAutoScroll();
+    setupDrag();
+  });
+}
+
+function startAutoScroll(){
+  function step(){
+    if(!scrollPaused){
+      scrollOuter.scrollLeft += SCROLL_SPEED;
+      // infinite loop: reset to start when reaching halfway
+      const half = scrollOuter.scrollWidth / 2;
+      if(scrollOuter.scrollLeft >= half) scrollOuter.scrollLeft -= half;
+    }
+    rafId = requestAnimationFrame(step);
+  }
+  rafId = requestAnimationFrame(step);
+}
+
+function setupDrag(){
+  let isDown=false, startX=0, startScroll=0;
+
+  // Touch
+  scrollOuter.addEventListener('touchstart', e=>{
+    scrollPaused=true;
+    startX=e.touches[0].pageX;
+    startScroll=scrollOuter.scrollLeft;
+  },{passive:true});
+  scrollOuter.addEventListener('touchmove', e=>{
+    const dx=startX - e.touches[0].pageX;
+    scrollOuter.scrollLeft=startScroll+dx;
+    // infinite loop while dragging
+    const half=scrollOuter.scrollWidth/2;
+    if(scrollOuter.scrollLeft<0) scrollOuter.scrollLeft+=half;
+    if(scrollOuter.scrollLeft>=half) scrollOuter.scrollLeft-=half;
+  },{passive:true});
+  scrollOuter.addEventListener('touchend',()=>{ scrollPaused=false; });
+
+  // Mouse drag
+  scrollOuter.addEventListener('mousedown', e=>{
+    isDown=true; scrollPaused=true;
+    startX=e.pageX; startScroll=scrollOuter.scrollLeft;
+    scrollOuter.classList.add('dragging');
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e=>{
+    if(!isDown)return;
+    const dx=startX-e.pageX;
+    scrollOuter.scrollLeft=startScroll+dx;
+    const half=scrollOuter.scrollWidth/2;
+    if(scrollOuter.scrollLeft<0) scrollOuter.scrollLeft+=half;
+    if(scrollOuter.scrollLeft>=half) scrollOuter.scrollLeft-=half;
+  });
+  window.addEventListener('mouseup',()=>{
+    if(!isDown)return;
+    isDown=false; scrollPaused=false;
+    scrollOuter.classList.remove('dragging');
+  });
 }
 
 /* ─ SEND ─ */
@@ -1192,5 +1263,6 @@ init();
 </script>
 </body>
 </html>
+
 
 
