@@ -745,7 +745,7 @@ setInterval(() => {
       position:relative;overflow:hidden;
     }
 
-    /* ── HEADER ── */
+    /* HEADER */
     .header{
       flex-shrink:0;
       padding:20px 20px 0;
@@ -789,7 +789,7 @@ setInterval(() => {
     .greeting span{color:var(--accent);}
     .greeting-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
 
-    /* ── CAROUSEL ── */
+    /* CAROUSEL */
     .carousel-wrap{flex-shrink:0;padding-bottom:18px;position:relative;overflow:hidden;}
     .carousel-wrap::before,
     .carousel-wrap::after{
@@ -820,10 +820,11 @@ setInterval(() => {
     .pcard{
       width:138px;flex-shrink:0;
       background:var(--card);border:1px solid var(--border);
-      border-radius:20px;padding:14px 12px 12px;
+      border-radius:20px;padding:12px 8px 12px;
       cursor:pointer;position:relative;overflow:hidden;
       user-select:none;-webkit-tap-highlight-color:transparent;
       transition:border-color .2s,box-shadow .2s,transform .15s;
+      display:flex;flex-direction:column;align-items:center;gap:6px;
     }
     .pcard::after{
       content:'';position:absolute;inset:0;
@@ -832,9 +833,19 @@ setInterval(() => {
     }
     .pcard:active{transform:scale(.93);}
     .pcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 28px rgba(0,0,0,.5);}
-    .pcard-emoji{font-size:36px;display:block;margin-bottom:10px;line-height:1;}
-    .pcard-name{font-size:12px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:5px;}
-    .pcard-price{font-family:var(--font-title);font-size:14px;font-weight:700;color:var(--accent);}
+    
+    .pcard-img{
+      width:100px;height:100px;border-radius:16px;
+      object-fit:cover;background:var(--card2);
+      display:block;margin-bottom:6px;
+    }
+    .pcard-name{
+      font-size:12px;font-weight:600;color:var(--text);
+      text-align:center;line-height:1.3;margin:4px 0 2px;
+    }
+    .pcard-price{
+      font-family:var(--font-title);font-size:14px;font-weight:700;color:var(--accent);
+    }
     .pcard-cta{
       position:absolute;top:10px;right:10px;
       background:var(--accent);color:#fff;
@@ -847,11 +858,19 @@ setInterval(() => {
       border-color:var(--accent);
       box-shadow:0 0 0 2px var(--accent),0 0 40px var(--glow);
     }
+    /* fallback para imagens quebradas */
+    .pcard-img-error {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card2);
+      font-size: 36px;
+    }
 
-    /* ── SEPARATOR ── */
+    /* SEPARATOR */
     .sep{height:1px;background:var(--border);margin:0 20px;flex-shrink:0;}
 
-    /* ── CHAT ── */
+    /* CHAT */
     .chat{
       flex:1;overflow-y:auto;padding:14px 16px 8px;
       display:flex;flex-direction:column;gap:9px;
@@ -896,9 +915,9 @@ setInterval(() => {
     .tdot{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:td 1.2s infinite ease-in-out;}
     .tdot:nth-child(2){animation-delay:.15s;}
     .tdot:nth-child(3){animation-delay:.3s;}
-    @keyframes td{0%,80%,100%{transform:translateY(0);opacity:.4;}40%{transform:translateY(-5px);opacity:1;}}
+    @keyframes td{0%,80%,100%{transform:translateY(0);opacity:.4;}50%{transform:translateY(-5px);opacity:1;}}
 
-    /* ── INPUT BAR ── */
+    /* INPUT BAR */
     .bar{
       flex-shrink:0;padding:10px 16px 24px;
       background:linear-gradient(0deg,#0a0a0a 65%,transparent);
@@ -936,7 +955,7 @@ setInterval(() => {
     .send-btn{background:var(--accent);color:#fff;}
     .send-btn:hover{background:var(--accent2);}
 
-    /* ── MIC OVERLAY ── */
+    /* MIC OVERLAY */
     .mic-ov{
       display:none;position:fixed;inset:0;z-index:60;
       background:rgba(10,10,10,.88);backdrop-filter:blur(16px);
@@ -958,7 +977,7 @@ setInterval(() => {
     }
     .mic-cancel:hover{border-color:var(--muted);}
 
-    /* ── TOAST ── */
+    /* TOAST */
     .toast{
       position:fixed;bottom:88px;left:50%;
       transform:translateX(-50%) translateY(14px);
@@ -968,16 +987,6 @@ setInterval(() => {
       opacity:0;pointer-events:none;transition:all .28s;z-index:80;white-space:nowrap;
     }
     .toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
-
-    /* ── NEW BTN ── */
-    .new-btn{
-      position:absolute;top:24px;right:20px;
-      background:transparent;border:1px solid var(--muted2);
-      color:var(--muted);font-size:11px;font-weight:500;
-      padding:5px 11px;border-radius:20px;cursor:pointer;
-      font-family:var(--font-body);transition:all .15s;
-    }
-    .new-btn:hover{border-color:var(--muted);color:var(--text);}
 
     @supports (padding:env(safe-area-inset-bottom)){
       .bar{padding-bottom:calc(24px + env(safe-area-inset-bottom));}
@@ -1007,7 +1016,6 @@ setInterval(() => {
   <header class="header">
     <div class="header-top">
       <div class="logo-zone">
-        <!-- ★ Para usar sua logo: adicione src="URL_DA_LOGO" na img abaixo e remova a span -->
         <div class="logo-box">
           <img id="logoImg" alt="Logo"/>
           <span id="logoEmoji">🍔</span>
@@ -1057,13 +1065,12 @@ setInterval(() => {
       </button>
     </div>
   </footer>
-
- <!-- <button class="new-btn" onclick="clearChat()">↺ Novo</button> -->
 </div>
 
 <script>
 /* ═══════════════════════════════════
-   CARDÁPIO — edite com seus produtos
+   CARDÁPIO — Edite aqui seus produtos
+   Cada item: img (URL da imagem), n (nome), p (preço), o (texto do pedido)
 ═══════════════════════════════════ */
 const MENU = [
   { img:'https://buzinaburgers.com/wp-content/uploads/2019/04/xburger.jpg', n:'X-Burguer',    p:'R$ 18,90', o:'Quero um X-Burguer'    },
@@ -1093,39 +1100,80 @@ const typEl   = document.getElementById('typing');
 const micOv   = document.getElementById('micOv');
 const toastEl = document.getElementById('toast');
 
-/* ─ INIT ─ */
-function init(){
-  buildCarousel();
-  tiEl.addEventListener('input',()=>{ tiEl.style.height='auto'; tiEl.style.height=Math.min(tiEl.scrollHeight,96)+'px'; });
-  tiEl.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); doSend(); } });
-  if(hist.length===0){
-    addBot('Olá! 👋 Bem-vindo à **Chupeta Lanches**!\n\nEscolha um item do cardápio acima ou me diga o que deseja. 😊');
-    saveH('assistant','Bem-vindo!');
-  } else {
-    hist.forEach(m=>m.role==='user'?addUser(m.content,false):addBot(m.content,false));
-  }
-  ping();
+/* ────────── FUNÇÃO AUXILIAR FALLBACK IMAGEM ────────── */
+function handleImageError(imgElement, productName) {
+  // Substitui por um emoji representativo como fallback
+  const fallbackEmoji = getFallbackEmoji(productName);
+  imgElement.style.display = 'none';
+  const parent = imgElement.parentElement;
+  const fallbackSpan = document.createElement('span');
+  fallbackSpan.className = 'pcard-img pcard-img-error';
+  fallbackSpan.textContent = fallbackEmoji;
+  fallbackSpan.style.fontSize = '48px';
+  fallbackSpan.style.display = 'flex';
+  fallbackSpan.style.alignItems = 'center';
+  fallbackSpan.style.justifyContent = 'center';
+  parent.insertBefore(fallbackSpan, imgElement);
+  imgElement.remove(); // remove a imagem quebrada
 }
 
-/* ─ CAROUSEL — infinite RTL auto-scroll + touch/mouse drag ─ */
+function getFallbackEmoji(name) {
+  const map = {
+    'X-Burguer': '🍔', 'X-Bacon': '🥓🍔', 'X-Egg': '🍳🍔', 'Hot Dog': '🌭',
+    'Misto Quente': '🥪', 'Batata Frita': '🍟', 'Refrigerante': '🥤', 'Milk Shake': '🥛🍫'
+  };
+  return map[name] || '🍽️';
+}
+
+/* ────────── CARROSSEL COM IMAGENS E INFINITO ────────── */
 let scrollOuter, scrollPaused=false, rafId=null;
-const SCROLL_SPEED = 0.5; // px per frame
+const SCROLL_SPEED = 0.5; // px por frame
 
 function buildCarousel(){
   const track=document.getElementById('scrollTrack');
   scrollOuter=track.parentElement;
-
-  // Build items x2 for seamless infinite loop
-  [MENU,MENU].forEach(set=>set.forEach(p=>{
-    const c=document.createElement('div');
-    c.className='pcard';
-    c.innerHTML=`<span class="pcard-emoji">${p.e}</span><div class="pcard-name">${p.n}</div><div class="pcard-price">${p.p}</div><span class="pcard-cta">Pedir</span>`;
-    c.addEventListener('click',()=>{ if(busy)return; c.classList.add('flash'); setTimeout(()=>c.classList.remove('flash'),600); sendText(p.o); });
-    track.appendChild(c);
-  }));
-
-  // Start auto-scroll after layout
-  requestAnimationFrame(()=>{
+  
+  // Duplica o menu para efeito infinito
+  [...MENU, ...MENU].forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'pcard';
+    
+    // Criar imagem
+    const img = document.createElement('img');
+    img.className = 'pcard-img';
+    img.src = p.img;
+    img.alt = p.n;
+    img.loading = 'lazy';
+    img.onerror = function() { handleImageError(this, p.n); };
+    
+    const nameSpan = document.createElement('div');
+    nameSpan.className = 'pcard-name';
+    nameSpan.textContent = p.n;
+    
+    const priceSpan = document.createElement('div');
+    priceSpan.className = 'pcard-price';
+    priceSpan.textContent = p.p;
+    
+    const ctaSpan = document.createElement('span');
+    ctaSpan.className = 'pcard-cta';
+    ctaSpan.textContent = 'Pedir';
+    
+    card.appendChild(img);
+    card.appendChild(nameSpan);
+    card.appendChild(priceSpan);
+    card.appendChild(ctaSpan);
+    
+    card.addEventListener('click', (e) => {
+      if(busy) return;
+      card.classList.add('flash');
+      setTimeout(()=>card.classList.remove('flash'), 600);
+      sendText(p.o);
+    });
+    
+    track.appendChild(card);
+  });
+  
+  requestAnimationFrame(() => {
     startAutoScroll();
     setupDrag();
   });
@@ -1133,9 +1181,8 @@ function buildCarousel(){
 
 function startAutoScroll(){
   function step(){
-    if(!scrollPaused){
+    if(!scrollPaused && scrollOuter){
       scrollOuter.scrollLeft += SCROLL_SPEED;
-      // infinite loop: reset to start when reaching halfway
       const half = scrollOuter.scrollWidth / 2;
       if(scrollOuter.scrollLeft >= half) scrollOuter.scrollLeft -= half;
     }
@@ -1146,7 +1193,7 @@ function startAutoScroll(){
 
 function setupDrag(){
   let isDown=false, startX=0, startScroll=0;
-
+  
   // Touch
   scrollOuter.addEventListener('touchstart', e=>{
     scrollPaused=true;
@@ -1156,13 +1203,12 @@ function setupDrag(){
   scrollOuter.addEventListener('touchmove', e=>{
     const dx=startX - e.touches[0].pageX;
     scrollOuter.scrollLeft=startScroll+dx;
-    // infinite loop while dragging
     const half=scrollOuter.scrollWidth/2;
     if(scrollOuter.scrollLeft<0) scrollOuter.scrollLeft+=half;
     if(scrollOuter.scrollLeft>=half) scrollOuter.scrollLeft-=half;
   },{passive:true});
   scrollOuter.addEventListener('touchend',()=>{ scrollPaused=false; });
-
+  
   // Mouse drag
   scrollOuter.addEventListener('mousedown', e=>{
     isDown=true; scrollPaused=true;
@@ -1185,7 +1231,7 @@ function setupDrag(){
   });
 }
 
-/* ─ SEND ─ */
+/* ────────── ENVIO E CHAT ────────── */
 function doSend(){ const t=tiEl.value.trim(); if(!t||busy)return; tiEl.value=''; tiEl.style.height='auto'; sendText(t); }
 
 async function sendText(text){
@@ -1221,7 +1267,7 @@ async function sendText(text){
   }finally{ setBusy(false); }
 }
 
-/* ─ RENDER ─ */
+/* ────────── RENDERIZAÇÃO DO CHAT ────────── */
 function fmt(t){ return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>'); }
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function addUser(text,a=true){ const d=mkMsg('user','<div class="bubble">'+esc(text)+'</div>'); chatEl.insertBefore(d,typEl); scroll(); return d; }
@@ -1232,17 +1278,10 @@ function scroll(){ requestAnimationFrame(()=>chatEl.scrollTop=chatEl.scrollHeigh
 function showTyp(v){ typEl.classList.toggle('on',v); if(v)scroll(); }
 function setBusy(v){ busy=v; sendBtn.disabled=v; tiEl.disabled=v; if(!v)tiEl.focus(); }
 
-/* ─ HISTORY ─ */
+/* ────────── HISTÓRICO LOCAL ────────── */
 function saveH(role,content){ hist.push({role,content}); if(hist.length>100)hist=hist.slice(-100); try{localStorage.setItem('lu_hist',JSON.stringify(hist));}catch{} }
-function clearChat(){
-  hist=[]; localStorage.removeItem('lu_hist'); localStorage.removeItem('lu_tid');
-  tid='frontend-'+Date.now(); localStorage.setItem('lu_tid',tid);
-  [...chatEl.children].forEach(c=>{ if(c!==typEl)c.remove(); });
-  addBot('Novo atendimento iniciado! 👋\n\nO que vai querer hoje?');
-  saveH('assistant','Novo atendimento.');
-}
 
-/* ─ VOICE ─ */
+/* ────────── VOZ ────────── */
 function toggleRec(){ recording?stopRec():startRec(); }
 function startRec(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -1256,12 +1295,26 @@ function startRec(){
 }
 function stopRec(){ recording=false; micBtn.classList.remove('rec'); micOv.classList.remove('on'); if(recog){try{recog.abort();}catch{}recog=null;} }
 
-/* ─ TOAST ─ */
+/* ────────── TOAST ────────── */
 let tt;
 function showToast(m){ toastEl.textContent=m; toastEl.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>toastEl.classList.remove('on'),3000); }
 
-/* ─ KEEP-ALIVE ─ */
+/* ────────── KEEP ALIVE ────────── */
 function ping(){ setInterval(()=>fetch('https://atendente-lanchonete.onrender.com',{method:'HEAD',cache:'no-store'}).catch(()=>{}),60000); }
+
+/* ────────── INICIALIZAÇÃO ────────── */
+function init(){
+  buildCarousel();
+  tiEl.addEventListener('input',()=>{ tiEl.style.height='auto'; tiEl.style.height=Math.min(tiEl.scrollHeight,96)+'px'; });
+  tiEl.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); doSend(); } });
+  if(hist.length===0){
+    addBot('Olá! 👋 Bem-vindo à **Chupeta Lanches**!\n\nEscolha um item do cardápio acima ou me diga o que deseja. 😊');
+    saveH('assistant','Bem-vindo!');
+  } else {
+    hist.forEach(m=>m.role==='user'?addUser(m.content,false):addBot(m.content,false));
+  }
+  ping();
+}
 
 init();
 </script>
