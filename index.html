@@ -1300,7 +1300,7 @@ let tt;
 function showToast(m){ toastEl.textContent=m; toastEl.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>toastEl.classList.remove('on'),3000); }
 
 /* ────────── KEEP ALIVE ────────── */
-function ping(){ setInterval(()=>fetch('https://atendente-lanchonete.onrender.com',{method:'HEAD',cache:'no-store'}).catch(()=>{}),60000); }
+function ping(){ setInterval(()=>fetch('https://atendente-lanchonete.onrender.com',{method:'HEAD',cache:'no-store'}).catch(()=>{}),300000); }
 
 /* ────────── INICIALIZAÇÃO ────────── */
 function init(){
@@ -1318,11 +1318,6 @@ function init(){
 
 init();
 
-    // Keep-alive: ping a cada 1 minuto enquanto a página estiver aberta
- setInterval(() => {
-    fetch('https://atendente-lanchonete.onrender.com', { method: 'HEAD', cache: 'no-store' })
-        .catch(() => {});
-}, 300000);
 </script>
 </body>
 </html>
