@@ -1066,64 +1066,15 @@ setInterval(() => {
    CARDÁPIO — edite com seus produtos
 ═══════════════════════════════════ */
 const MENU = [
-  { 
-    e:'🍔', 
-    n:'X-Burguer',    
-    p:'R$ 18,90', 
-    o:'Quero um X-Burguer',
-    img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd'
-  },
-  { 
-    e:'🥓', 
-    n:'X-Bacon',      
-    p:'R$ 22,90', 
-    o:'Quero um X-Bacon',
-    img:'https://images.unsplash.com/photo-1550547660-d9450f859349'
-  },
-  { 
-    e:'🍳', 
-    n:'X-Egg',        
-    p:'R$ 20,90', 
-    o:'Quero um X-Egg',
-    img:'https://images.unsplash.com/photo-1606755962773-d324e0a13086'
-  },
-  { 
-    e:'🌭', 
-    n:'Hot Dog',       
-    p:'R$ 14,90', 
-    o:'Quero um Hot Dog',
-    img:'https://images.unsplash.com/photo-1550547660-ffe0c9e8c5a9'
-  },
-  { 
-    e:'🥪', 
-    n:'Misto Quente',  
-    p:'R$ 10,90', 
-    o:'Quero um Misto Quente',
-    img:'https://images.unsplash.com/photo-1553909489-cd47e0ef937f'
-  },
-  { 
-    e:'🍟', 
-    n:'Batata Frita',  
-    p:'R$ 12,90', 
-    o:'Quero batata frita',
-    img:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877'
-  },
-  { 
-    e:'🥤', 
-    n:'Refrigerante',  
-    p:'R$  7,90', 
-    o:'Quero um refrigerante',
-    img:'https://images.unsplash.com/photo-1581636625402-29b2a704ef13'
-  },
-  { 
-    e:'🥛', 
-    n:'Milk Shake',    
-    p:'R$ 16,90', 
-    o:'Quero um milk shake',
-    img:'https://pixabay.com/pt/images/download/pexels-beverage-1869598_1920.jpg'
-  },
+  { img:'https://buzinaburgers.com/wp-content/uploads/2019/04/xburger.jpg', n:'X-Burguer',    p:'R$ 18,90', o:'Quero um X-Burguer'    },
+  { img:'https://www.seara.com.br/wp-content/uploads/2025/09/x-bacon-portal-minha-receita.jpg',   n:'X-Bacon',      p:'R$ 22,90', o:'Quero um X-Bacon'      },
+  { img:'https://www.receiteria.com.br/wp-content/uploads/receitas-de-x-egg-3-730x449.jpg',     n:'X-Egg',        p:'R$ 20,90', o:'Quero um X-Egg'        },
+  { img:'https://img.freepik.com/premium-photo/hot-dog-with-mustard-it-ketchup-side_807701-4467.jpg',   n:'Hot Dog',      p:'R$ 14,90', o:'Quero um Hot Dog'      },
+  { img:'https://2.bp.blogspot.com/-n0BRuB8rVnM/Wwv2pb63PcI/AAAAAAAAM_E/gYTFlGH39zg95nDYtdwPteKhFc8vocccgCLcBGAs/w1200-h630-p-k-no-nu/misto-quente-receita-1.jpeg',     n:'Misto Quente', p:'R$ 10,90', o:'Quero um Misto Quente' },
+  { img:'https://www.cenariomt.com.br/wp-content/uploads/2023/04/como-fazer-batata-frita-na-airfryer-1024x576.jpg',    n:'Batata Frita', p:'R$ 12,90', o:'Quero batata frita'    },
+  { img:'https://hpg.com.br/wp-content/uploads/2025/12/10-melhores-marcas-de-refrigerante.jpg',     n:'Refrigerante', p:'R$  7,90', o:'Quero um refrigerante' },
+  { img:'https://www.thereciperebel.com/wp-content/uploads/2021/06/how-to-make-a-milkshake-www.thereciperebel.com-1200-38-of-44.jpg', n:'Milk Shake',   p:'R$ 16,90', o:'Quero um milk shake'   },
 ];
-
 const API = 'https://atendente-lanchonete.onrender.com/agui';
 
 let busy=false, recog=null, recording=false;
